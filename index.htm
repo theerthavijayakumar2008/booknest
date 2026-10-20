@@ -1,232 +1,163 @@
-
-from pathlib import Path
-
-html = r'''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BookNest | Your Reading Corner</title>
+<title>BookNest | MuLearn</title>
 <style>
-*{box-sizing:border-box;scroll-behavior:smooth}
-body{margin:0;font-family:Arial,sans-serif;background:#fffaf3;color:#35271f;line-height:1.6}
-header{background:#493323;color:white;padding:22px 15px;text-align:center}
-header h1{margin:0;font-size:34px}
-nav{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;padding:14px;background:#694a35}
-nav a{color:white;text-decoration:none;font-weight:bold}
-nav a:hover{color:#ffdca8}
-section{padding:40px 20px;max-width:1100px;margin:auto;scroll-margin-top:15px}
-.hero{max-width:none;text-align:center;background:#f3e4d1;padding:65px 20px}
-.hero h2{font-size:clamp(28px,5vw,42px);color:#493323}
-.btn{display:inline-block;background:#694a35;color:white;padding:10px 18px;border:0;border-radius:6px;text-decoration:none;cursor:pointer}
-.btn:hover{background:#382519}
-h2{color:#493323}
-.book-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:20px}
-.book{background:white;border:1px solid #eadccd;border-radius:10px;padding:16px;text-align:center;box-shadow:0 3px 8px #00000010}
-.book img{width:140px;height:185px;object-fit:cover;border-radius:5px;background:#f0e5d8}
-.search-box,input,textarea,select{width:100%;padding:11px;margin:7px 0 15px;border:1px solid #c9b8a6;border-radius:5px;font:inherit}
-.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:15px}
-.service{background:#f5e4d0;padding:20px;border-radius:8px}
-form{max-width:560px;margin:auto;background:white;padding:22px;border-radius:10px;border:1px solid #eadccd}
-label{font-weight:bold}
-footer{background:#493323;color:white;text-align:center;padding:25px}
-footer a{color:#ffdca8}
-.note{font-size:13px;color:#65564a}
-.status{color:#45633d;font-weight:bold}
-@media(max-width:500px){header h1{font-size:28px}nav{gap:12px}section{padding:30px 16px}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#fff8f0;color:#493323}
+header,footer{background:#573b2c;color:white;text-align:center;padding:18px}
+nav{background:#704b38;text-align:center;padding:12px}
+nav a{color:white;text-decoration:none;margin:8px;font-size:14px}
+section{padding:24px 14px;text-align:center}
+.hero{background:#f2e2d2}
+.container{max-width:600px;margin:auto}
+form{background:#fffdfb;padding:16px;border:1px solid #e3d8cf;border-radius:8px;margin:12px auto;text-align:left}
+input,textarea,select{width:100%;padding:10px;margin:6px 0;border:1px solid #d5c8bd;border-radius:5px;font:inherit}
+label{font-size:14px}
+button{background:#704b38;color:white;border:0;border-radius:5px;padding:10px 16px;cursor:pointer}
+.book{background:white;border:1px solid #e3d8cf;border-radius:7px;padding:12px;margin:10px auto;text-align:left;max-width:600px}
+footer{font-size:13px;line-height:1.8}
 </style>
 </head>
 <body>
-<header id="home">
-  <h1>📚 BookNest</h1>
-  <p>Your cozy corner for every kind of reader</p>
+
+<header>
+<h1>📚 BookNest</h1>
+<p>Your Little Reading Corner</p>
 </header>
 
-<nav aria-label="Main navigation">
-  <a href="#home">Home</a>
-  <a href="#about">About</a>
-  <a href="#books">Books</a>
-  <a href="#services">Services</a>
-  <a href="#signup">Sign Up</a>
-  <a href="#contact">Contact</a>
+<nav>
+<a href="#home">Home</a>
+<a href="#about">About</a>
+<a href="#books">Books</a>
+<a href="#signup">Sign Up</a>
+<a href="#contact">Contact</a>
 </nav>
 
 <main>
-<section class="hero">
-  <h2>Find Your Next Favourite Story</h2>
-  <p>Discover wonderful books, explore new genres and make reading part of your everyday life.</p>
-  <a class="btn" href="#books">Explore Books</a>
+<section class="hero" id="home">
+<h2>Welcome to BookNest!</h2>
+<p>Discover books, explore ideas and enjoy reading.</p>
+<a href="#books"><button>Explore Books</button></a>
 </section>
 
 <section id="about">
-  <h2>About BookNest</h2>
-  <p>Welcome to BookNest, a friendly online reading corner created for book lovers. From exciting mysteries to imaginative fantasy and timeless classics, there is always a new story to discover.</p>
-  <p>Our mission is to make finding books simple, enjoyable and inspiring for every reader.</p>
+<h2>About BookNest</h2>
+<p>A cozy space for book lovers to explore and share books.</p>
 </section>
 
 <section id="books">
-  <h2>Explore Our Books</h2>
-  <p>Search by title or author, or filter by your favourite genre.</p>
-  <label for="search">Search books</label>
-  <input class="search-box" id="search" type="search" placeholder="Type a book title or author...">
-  <label for="genre">Choose a genre</label>
-  <select id="genre">
-    <option value="all">All Genres</option>
-    <option value="fantasy">Fantasy</option>
-    <option value="mystery">Mystery</option>
-    <option value="classic">Classic</option>
-    <option value="inspiration">Inspirational</option>
-    <option value="fiction">Fiction</option>
-  </select>
+<h2>Book Details</h2>
+<div class="container">
+<form id="bookForm">
+<label>Book Name</label>
+<input id="bookName" type="text" placeholder="Enter book name" required>
 
-  <div class="book-list" id="bookList">
-    <article class="book" data-genre="mystery">
-      <img src="https://covers.openlibrary.org/b/isbn/9781250301697-M.jpg" alt="The Silent Patient cover" onerror="this.onerror=null;this.src='https://placehold.co/140x185/f0e5d8/493323?text=Mystery+Book'">
-      <h3>The Silent Patient</h3><p>By Alex Michaelides</p>
-      <p>A psychological mystery filled with secrets and suspense.</p>
-      <button class="btn" type="button" onclick="addBook('The Silent Patient')">Add to Reading List</button>
-    </article>
-    <article class="book" data-genre="fantasy">
-      <img src="https://covers.openlibrary.org/b/isbn/9780590353427-M.jpg" alt="Harry Potter book cover" onerror="this.onerror=null;this.src='https://placehold.co/140x185/f0e5d8/493323?text=Fantasy+Book'">
-      <h3>Harry Potter and the Philosopher's Stone</h3><p>By J. K. Rowling</p>
-      <p>A young wizard discovers a magical world full of adventure and friendship.</p>
-      <button class="btn" type="button" onclick="addBook('Harry Potter and the Philosopher\\'s Stone')">Add to Reading List</button>
-    </article>
-    <article class="book" data-genre="classic">
-      <img src="https://covers.openlibrary.org/b/isbn/9780141439518-M.jpg" alt="Pride and Prejudice cover" onerror="this.onerror=null;this.src='https://placehold.co/140x185/f0e5d8/493323?text=Classic+Book'">
-      <h3>Pride and Prejudice</h3><p>By Jane Austen</p>
-      <p>A much-loved classic about relationships and first impressions.</p>
-      <button class="btn" type="button" onclick="addBook('Pride and Prejudice')">Add to Reading List</button>
-    </article>
-    <article class="book" data-genre="inspiration">
-      <img src="https://covers.openlibrary.org/b/isbn/9780062316110-M.jpg" alt="The Alchemist cover" onerror="this.onerror=null;this.src='https://placehold.co/140x185/f0e5d8/493323?text=Inspirational+Book'">
-      <h3>The Alchemist</h3><p>By Paulo Coelho</p>
-      <p>An inspiring journey about dreams, courage and finding your path.</p>
-      <button class="btn" type="button" onclick="addBook('The Alchemist')">Add to Reading List</button>
-    </article>
-    <article class="book" data-genre="fiction">
-      <img src="https://covers.openlibrary.org/b/isbn/9780061120084-M.jpg" alt="To Kill a Mockingbird cover" onerror="this.onerror=null;this.src='https://placehold.co/140x185/f0e5d8/493323?text=Fiction+Book'">
-      <h3>To Kill a Mockingbird</h3><p>By Harper Lee</p>
-      <p>A memorable story about compassion, justice and understanding others.</p>
-      <button class="btn" type="button" onclick="addBook('To Kill a Mockingbird')">Add to Reading List</button>
-    </article>
-    <article class="book" data-genre="classic">
-      <img src="https://covers.openlibrary.org/b/isbn/9780141439600-M.jpg" alt="Jane Eyre cover" onerror="this.onerror=null;this.src='https://placehold.co/140x185/f0e5d8/493323?text=Jane+Eyre'">
-      <h3>Jane Eyre</h3><p>By Charlotte Brontë</p>
-      <p>A classic story of independence, courage and personal growth.</p>
-      <button class="btn" type="button" onclick="addBook('Jane Eyre')">Add to Reading List</button>
-    </article>
-  </div>
-  <p id="noResults" hidden>No books found. Try another search or genre.</p>
-  <h3>Your Reading List</h3>
-  <ul id="readingList"><li>No books added yet.</li></ul>
-</section>
+<label>Author Name</label>
+<input id="author" type="text" placeholder="Enter author name" required>
 
-<section id="services">
-  <h2>Our Services</h2>
-  <div class="services">
-    <article class="service"><h3>📚 Book Discovery</h3><p>Explore different genres and discover your next favourite read.</p></article>
-    <article class="service"><h3>🔎 Easy Search</h3><p>Find books quickly by title, author or genre.</p></article>
-    <article class="service"><h3>⭐ Reading List</h3><p>Make a personal list of books you want to read.</p></article>
-  </div>
+<label>Genre</label>
+<select id="genre" required>
+<option value="">Select genre</option>
+<option>Fiction</option>
+<option>Fantasy</option>
+<option>Biography</option>
+<option>Self Help</option>
+<option>Science</option>
+<option>Other</option>
+</select>
+
+<label>Book Description</label>
+<textarea id="description" placeholder="Write a short description" rows="3" required></textarea>
+
+<button type="submit">Add Book</button>
+</form>
+<div id="bookList"></div>
+</div>
 </section>
 
 <section id="signup">
-  <h2>Join the BookNest Community</h2>
-  <p>Sign up and tell us which genres you enjoy.</p>
-  <form id="signupForm">
-    <label for="fullName">Full Name</label>
-    <input id="fullName" name="fullName" type="text" placeholder="Enter your name" required>
-    <label for="email">Email Address</label>
-    <input id="email" name="email" type="email" placeholder="Enter your email" required>
-    <label for="favourite">Favourite Genre</label>
-    <select id="favourite" name="favourite" required>
-      <option value="">Select a genre</option>
-      <option>Fantasy</option><option>Mystery</option><option>Classic</option>
-      <option>Inspirational</option><option>Fiction</option>
-    </select>
-    <button class="btn" type="submit">Sign Up</button>
-    <p class="status" id="signupStatus" role="status"></p>
-    <p class="note">This is a demo form. Details are not saved or sent to a server.</p>
-  </form>
+<h2>Sign Up</h2>
+<div class="container">
+<form id="signupForm">
+<label>Full Name</label>
+<input type="text" placeholder="Enter full name" required>
+
+<label>Email Address</label>
+<input type="email" placeholder="Enter email" required>
+
+<label>Mu ID</label>
+<input type="text" value="theerthavijayakumar@mulearn" readonly>
+
+<button type="submit">Sign Up</button>
+</form>
+</div>
 </section>
 
 <section id="contact">
-  <h2>Contact Us</h2>
-  <p>Have a question or a book recommendation? Send us a message.</p>
-  <form id="contactForm">
-    <label for="contactName">Your Name</label>
-    <input id="contactName" name="contactName" type="text" placeholder="Enter your name" required>
-    <label for="contactEmail">Email Address</label>
-    <input id="contactEmail" name="contactEmail" type="email" placeholder="Enter your email" required>
-    <label for="subject">Subject</label>
-    <input id="subject" name="subject" type="text" placeholder="Message subject" required>
-    <label for="message">Your Message</label>
-    <textarea id="message" name="message" rows="5" placeholder="Write your message..." required></textarea>
-    <button class="btn" type="submit">Send Message</button>
-    <p class="status" id="contactStatus" role="status"></p>
-    <p class="note">Demo only: this form does not send messages.</p>
-  </form>
+<h2>Contact Us</h2>
+<div class="container">
+<form id="contactForm">
+<label>Full Name</label>
+<input type="text" placeholder="Enter full name" required>
+
+<label>Email Address</label>
+<input type="email" placeholder="Enter email" required>
+
+<label>Your Message</label>
+<textarea rows="4" placeholder="Type your message" required></textarea>
+
+<button type="submit">Send Message</button>
+</form>
+</div>
 </section>
 </main>
 
 <footer>
-  <h2 style="color:white">📚 BookNest</h2>
-  <p>A cosy corner for every book lover.</p>
-  <p><a href="#home">Home</a> | <a href="#books">Books</a> | <a href="#contact">Contact</a></p>
-  <p>Mu ID: <strong>theerthavijayakumar@mulearn</strong></p>
-  <p>&copy; 2026 BookNest. Made with a love for reading.</p>
+<p>Created by Theertha Vijayakumar</p>
+<p>MuLearn | Semantic HTML Landing Page</p>
+<p>Mu ID: theerthavijayakumar@mulearn</p>
+<p>© 2026 BookNest</p>
 </footer>
 
 <script>
-const searchInput = document.getElementById("search");
-const genreSelect = document.getElementById("genre");
-const bookCards = [...document.querySelectorAll(".book")];
+document.getElementById("bookForm").addEventListener("submit",function(e){
+  e.preventDefault();
 
-function filterBooks() {
-  const query = searchInput.value.toLowerCase().trim();
-  const genre = genreSelect.value;
-  let visible = 0;
+  const book=document.createElement("div");
+  book.className="book";
 
-  bookCards.forEach(card => {
-    const matchesText = card.innerText.toLowerCase().includes(query);
-    const matchesGenre = genre === "all" || card.dataset.genre === genre;
-    card.hidden = !(matchesText && matchesGenre);
-    if (!card.hidden) visible++;
-  });
+  const title=document.createElement("h3");
+  title.textContent=document.getElementById("bookName").value;
 
-  document.getElementById("noResults").hidden = visible > 0;
-}
+  const author=document.createElement("p");
+  author.textContent="Author: "+document.getElementById("author").value;
 
-searchInput.addEventListener("input", filterBooks);
-genreSelect.addEventListener("change", filterBooks);
+  const genre=document.createElement("p");
+  genre.textContent="Genre: "+document.getElementById("genre").value;
 
-function addBook(title) {
-  const list = document.getElementById("readingList");
-  if (list.children.length === 1 && list.children[0].innerText === "No books added yet.") {
-    list.innerHTML = "";
-  }
-  const item = document.createElement("li");
-  item.textContent = title;
-  list.appendChild(item);
-}
+  const desc=document.createElement("p");
+  desc.textContent=document.getElementById("description").value;
 
-document.getElementById("signupForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  document.getElementById("signupStatus").textContent =
-    "Thank you for joining BookNest! This is a demo form.";
+  book.append(title,author,genre,desc);
+  document.getElementById("bookList").appendChild(book);
   this.reset();
 });
 
-document.getElementById("contactForm").addEventListener("submit", function(event) {
-  event.preventDefault();
-  document.getElementById("contactStatus").textContent =
-    "Thank you for your message! This is a demo form; no message was sent.";
+document.getElementById("signupForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  alert("Thank you for signing up!");
+  this.reset();
+});
+
+document.getElementById("contactForm").addEventListener("submit",function(e){
+  e.preventDefault();
+  alert("Thank you! Your message has been submitted.");
   this.reset();
 });
 </script>
+
 </body>
-</html>'''
-path = Path("/mnt/data/booknest_index.html")
-path.write_text(html, encoding="utf-8")
-print(f"Created {path} ({len(html)} characters)")
+</html>
